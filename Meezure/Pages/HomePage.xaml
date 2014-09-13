@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="MeasureONE.HomePage" xmlns:local="clr-namespace:MeasureONE;assembly=MeasureONE"
+	xmlns:CustomControls="clr-namespace:MeasureONE;assembly=MeasureONE" x:Name="this"
+	 Title="Home">
+
+	<ContentPage.ToolbarItems>
+		<CustomControls:HideableToolbarItem Command="{Binding GoToPreferences}" Icon="Icon.png" IsVisible="{Binding IsVisible}" Parent="{x:Reference this}" ></CustomControls:HideableToolbarItem>
+			<CustomControls:HideableToolbarItem Command="{Binding HideButton}" Icon="Icon.png" IsVisible="{Binding IsAlwaysVisible}" Parent="{x:Reference this}" ></CustomControls:HideableToolbarItem>
+
+	</ContentPage.ToolbarItems>
+								
+	<ListView ItemsSource="{Binding Items}" ItemTapped="OnSelectedMeasurement" HasUnevenRows="true">
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<CustomControls:DashboardViewCell></CustomControls:DashboardViewCell>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+
+</ContentPage>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="MeasureONE.MeasurementListPage"
+	xmlns:local="clr-namespace:MeasureONE;assembly=MeasureONE" Title="All Measures">
+	<ContentPage.Content>
+		<StackLayout>
+		<Label Text="All Measurements"></Label>
+		<ScrollView>
+			<ListView ItemsSource="{Binding Items}" HasUnevenRows="true">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<local:DashboardViewCell></local:DashboardViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</ScrollView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

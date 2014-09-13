@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:local="clr-namespace:MeasureONE;assembly=MeasureONE"
+	x:Class="MeasureONE.PreferencesPage">
+	<ContentPage.Content Title="Preferences">
+		<StackLayout>
+			<StackLayout.BindingContext>
+				<local:Preference></local:Preference>
+			</StackLayout.BindingContext>
+			<Entry Placeholder="Enter Imperial or Metric"></Entry>
+			<Button Text="Save Preferences" Command="{Binding SavePreferences}"></Button>
+			<Button Text="Units" Clicked="GoToUnits"></Button>
+			<Button Text="Measurement Types" Clicked="GoToMeasurementTypes"></Button>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

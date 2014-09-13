@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MeasureONE.UnitListPage" xmlns:local="clr-namespace:MeasureONE;assembly=MeasureONE">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout.BindingContext>
+				<local:MeasurementUnitList></local:MeasurementUnitList>
+			</StackLayout.BindingContext>
+
+			<Button Text="Add Unit" Command="{Binding AddUnit}"></Button>
+			<Button Text="Save Unit" Command="{Binding SaveAllUnits}"></Button>
+			<ScrollView>
+				<ListView ItemsSource="{Binding MeasurementUnits}" x:Name="UnitList">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<ViewCell.View>
+											<StackLayout Orientation="Horizontal">
+												<!---<Button Text="Save" Command="{Binding SaveUnit}" CommandParameter="{Binding .}"></Button>-->
+												<Entry Text="{Binding UnitName}" Placeholder="Enter a unit of measure"></Entry>
+												<Entry Text="{Binding UnitAbbreviation}" Placeholder="Enter an abbreviation for the UOM"></Entry>
+											</StackLayout>
+								</ViewCell.View>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</ScrollView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

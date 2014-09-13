@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="MeasureONE.MeasurementPage" 
+	xmlns:local="clr-namespace:MeasureONE;assembly=MeasureONE" Title="Measurement">
+	<ContentPage.Content>
+		<StackLayout>
+
+			<Label Text="{Binding MeasurementGroup.SubjectName}"></Label>
+			<Label Text="{Binding MeasurementGroup.DefinitionName}"></Label>
+
+			<StackLayout>
+			<ListView ItemsSource="{Binding MeasurementGroup.MeasurementItems}" HasUnevenRows="true">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<local:MeasurementEntryCell></local:MeasurementEntryCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			</StackLayout>
+
+			<StackLayout Orientation = "Horizontal">
+			<Label Text="Date Entered" YAlign="Center" XAlign="End"></Label>
+			<DatePicker Date="{Binding DateTimeCaptured}"></DatePicker>
+			</StackLayout>
+			<StackLayout>
+				<local:MeasurementStatGrid></local:MeasurementStatGrid>
+			</StackLayout>
+
+			<Button Text="Save" Command="{Binding SaveMeasurement}">
+			</Button>
+
+		</StackLayout>
+		<!-- add other measurements -->
+	</ContentPage.Content>
+</ContentPage>
