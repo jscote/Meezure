@@ -280,6 +280,13 @@ namespace Meezure
 					});
 				}
 
+				if (db.Table<MeasurementGroupUnitModel> ().Count (c => c.Id == 4) == 0) {
+					db.Insert (new MeasurementGroupUnitModel () {
+						Id = 4,
+						MeasurementGroupDefinitionId = 4,
+						UnitId = 5
+					});
+				}
 
 				db.CreateTable<MeasurementInstanceModel> ();
 				db.CreateTable<MeasurementGroupInstanceModel> ();
@@ -394,7 +401,20 @@ namespace Meezure
 				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsBloodPressure3.Id, MeasurementGroupDefinitionId = 2, UnitId = 1, Value = 78 });
 			}
 
+			var jsBpm = new MeasurementInstanceModel () {DateRecorded = DateTime.Now, MeasurementSubjectId = js.Id, MeasurementDefinitionId = 3 };
+			var jsBpm2 = new MeasurementInstanceModel () {DateRecorded = DateTime.Now.AddDays(-1), MeasurementSubjectId = js.Id, MeasurementDefinitionId = 3 };
+			var jsBpm3 = new MeasurementInstanceModel () {DateRecorded = DateTime.Now.AddDays(-2), MeasurementSubjectId = js.Id, MeasurementDefinitionId = 3 };
 
+			if (db.Table<MeasurementInstanceModel> ().Count (w => w.MeasurementSubjectId == js.Id && w.MeasurementDefinitionId == 3) == 0) {
+				db.Insert (jsBpm);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsBpm.Id, MeasurementGroupDefinitionId = 4, UnitId = 5, Value = 72 });
+
+				db.Insert (jsBpm2);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsBpm2.Id, MeasurementGroupDefinitionId = 4, UnitId = 5, Value = 80 });
+
+				db.Insert (jsBpm3);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsBpm3.Id, MeasurementGroupDefinitionId = 4, UnitId = 5, Value = 69 });
+			}
 
 			var stellaBloodPressure = new MeasurementInstanceModel () {DateRecorded = DateTime.Now, MeasurementSubjectId = stella.Id, MeasurementDefinitionId = 1 };
 			var stellaBloodPressure2 = new MeasurementInstanceModel () {DateRecorded = DateTime.Now.AddDays(-1), MeasurementSubjectId = stella.Id, MeasurementDefinitionId = 1 };

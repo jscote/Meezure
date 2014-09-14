@@ -30,7 +30,7 @@ namespace Meezure
 		public void Load(int id) {
 
 
-			var measurements = _repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: 3);
+			var measurements = _repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: null);
 
 			Items.Clear ();
 
