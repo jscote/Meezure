@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementDashboardViewModel: ViewModelBase
 	{
@@ -13,17 +13,24 @@ namespace MeasureONE
 
 		private IRepository<MeasurementInstanceModel> _repository;
 
-		public MeasurementDashboardViewModel(IRepository<MeasurementInstanceModel> repository) 
+		IRepository<MeasurementSubjectModel> _subjectRepository;
+
+		public MeasurementDashboardViewModel(IRepository<MeasurementInstanceModel> repository, IRepository<MeasurementSubjectModel> subjectRepository) 
 		{
+			_subjectRepository = subjectRepository;
 			_repository = repository;
 
-			MessengerInstance.Register<NotificationMessage> (this, _loadingMsgId, (msg) => Load ());
+			Subjects = new ObservableCollection<MeasurementSubjectModel> (_subjectRepository.GetAll ());
+
+			//MessengerInstance.Register<NotificationMessage> (this, _loadingMsgId, (msg) => Load ());
 
 		}
 
 
-		public void Load() {
-			var measurements = _repository.GetAllWithChildren(predicate: null, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: 3);
+		public void Load(int id) {
+
+
+			var measurements = _repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: 3);
 
 			Items.Clear ();
 
@@ -59,178 +66,19 @@ namespace MeasureONE
 
 		}
 
-		public void Init (bool inMainMenu)
-		{
-			Items.Clear ();
-
-			var measures = _repository.GetAll ();
-
-			if (inMainMenu) {
-				Items.Add (new MeasurementDashboardItemViewModel () {
-					MeasurementDefinitionId = (int)MeasurementTypeDefId.BloodPressure,
-					Subject = "JS",
-					LastRecordedDate = DateTime.Now,
-					MeasurementName = "Blood Pressure",
-					MeasurementGroups = new ObservableCollection<MeasurementItemGroupViewModel>() {
-						new MeasurementItemGroupViewModel () {
-							DefinitionName = "Blood Pressure",
-							MeasurementType = "Last Entry",
-							MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-								new MeasurementItemViewModel () {
-									Name = "Systolic",
-									Value = 100,
-									Uom = "mmg"
-								},
-								new MeasurementItemViewModel () {
-									Name = "Diastolic",
-									Value = 60,
-									Uom = "mmg"
-								}
-							}
-						}
-	
-					}
-				});
-
-				Items.Add (new MeasurementDashboardItemViewModel () {
-					MeasurementDefinitionId = (int)MeasurementTypeDefId.Dimension,
-					Subject = "Living Room Window",
-					LastRecordedDate = DateTime.Now,
-					MeasurementName = "Dimension",
-					MeasurementGroups = new ObservableCollection<MeasurementItemGroupViewModel>() {
-						new MeasurementItemGroupViewModel () {
-							DefinitionName = "Dimension",
-							MeasurementType = "Last Entry",
-							MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-								new MeasurementItemViewModel () {
-									Name = "Width",
-									Value = 60,
-									Uom = "in"
-								},
-								new MeasurementItemViewModel () {
-									Name = "Height",
-									Value = 60,
-									Uom = "in"
-								}
-							}
-						}
-					}
-				});
-				return;
+		private int _selectedSubjectIndex;
+		public int SelectedSubjectIndex {			
+			get {
+				return _selectedSubjectIndex;
 			}
-			Items.Add (new MeasurementDashboardItemViewModel () {
-				MeasurementDefinitionId = (int)MeasurementTypeDefId.BloodPressure,
-				Subject = "JS",
-				LastRecordedDate = DateTime.Now,
-				MeasurementName = "Blood Pressure",
-				MeasurementGroups = new ObservableCollection<MeasurementItemGroupViewModel>() {
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Blood Pressure",
-						MeasurementType = "Minimum Goal",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Systolic",
-								Value = 100,
-								Uom = "mmg"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Diastolic",
-								Value = 60,
-								Uom = "mmg"
-							}
-						}
-					},
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Blood Pressure",
-						MeasurementType = "Maximum Goal",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Systolic",
-								Value = 120,
-								Uom = "mmg"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Diastolic",
-								Value = 90,
-								Uom = "mmg"
-							}
-						}
-					},
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Blood Pressure",
-						MeasurementType = "Average",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Systolic",
-								Value = 123,
-								Uom = "mmg"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Diastolic",
-								Value = 86,
-								Uom = "mmg"
-							}
-						}
-					},
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Blood Pressure",
-						MeasurementType = "Maximum",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Systolic",
-								Value = 133,
-								Uom = "mmg"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Diastolic",
-								Value = 94,
-								Uom = "mmg"
-							}
-						}
-					},
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Blood Pressure",
-						MeasurementType = "Minimum",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Systolic",
-								Value = 111,
-								Uom = "mmg"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Diastolic",
-								Value = 76,
-								Uom = "mmg"
-							}
-						}
-					}
-				}
-			});
+			set {
 
-			Items.Add (new MeasurementDashboardItemViewModel () {
-				MeasurementDefinitionId = (int)MeasurementTypeDefId.Dimension,
-				Subject = "Living Room Window",
-				LastRecordedDate = DateTime.Now,
-				MeasurementName = "Dimension",
-				MeasurementGroups = new ObservableCollection<MeasurementItemGroupViewModel>() {
-					new MeasurementItemGroupViewModel () {
-						DefinitionName = "Dimension",
-						MeasurementType = "Dimension",
-						MeasurementItems = new ObservableCollection<MeasurementItemViewModel> () {
-							new MeasurementItemViewModel () {
-								Name = "Width",
-								Value = 60,
-								Uom = "in"
-							},
-							new MeasurementItemViewModel () {
-								Name = "Height",
-								Value = 60,
-								Uom = "in"
-							}
-						}
-					}
+				if (Subjects != null && Subjects.Any()) {
+					Load (Subjects [value].Id);
 				}
-			});
+
+				Set (() => SelectedSubjectIndex, ref _selectedSubjectIndex, value);
+			}
 		}
 
 		private ObservableCollection<MeasurementDashboardItemViewModel> _items;
@@ -242,7 +90,19 @@ namespace MeasureONE
 
 				return _items;
 			}
+		}
 
+		private ObservableCollection<MeasurementSubjectModel> _subjects;
+		public ObservableCollection<MeasurementSubjectModel> Subjects {
+			get{ 
+				if (_subjects == null) {
+					_subjects = new ObservableCollection<MeasurementSubjectModel> ();
+				}
+
+				return _subjects;
+			} set { 
+				_subjects = value;
+			}
 		}
 	}
 

@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class FilterViewModel : ViewModelBase
 	{

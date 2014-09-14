@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public interface IRepository<TEntity> : IDisposable where TEntity : class
 	{

@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class ToolbarViewModel : ViewModelBase
 	{

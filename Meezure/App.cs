@@ -5,8 +5,9 @@ using Microsoft.Practices.ServiceLocation;
 using System.Linq;
 using SQLite.Net;
 using Autofac;
+using SQLiteNetExtensions.Extensions;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class App
 	{
@@ -24,7 +25,7 @@ namespace MeasureONE
 			builder.RegisterType<Repository<MeasurementSubjectModel>>().As<IRepository<MeasurementSubjectModel>>();
 
 			builder.RegisterType<NavigationService> ();
-			builder.RegisterType<HomePage> ();
+			builder.RegisterType<DashboardPage> ();
 
 			builder.RegisterType<UnitOfWork> ().As<IUnitOfWork> ();
 
@@ -63,11 +64,11 @@ namespace MeasureONE
 			db.CreateTable<Version> ();
 			var isInstalled = false;
 
-			if (db.Table<Version> ().FirstOrDefault (w => w.InstalledVersion == "0.1") == null) {
-				db.Insert (new Version () { InstalledVersion = "0.1" });
+			/*if (db.Table<Version> ().FirstOrDefault (w => w.InstalledVersion == "0.2.3") == null) {
+				db.Insert (new Version () { InstalledVersion = "0.2.3" });
 			} else {
 				isInstalled = true;
-			}
+			}*/
 
 			if (!isInstalled) {
 				db.CreateTable<MeasurementSystemModel> ();
@@ -121,9 +122,46 @@ namespace MeasureONE
 					});
 				}
 
+				if (db.Table<MeasurementUnitModel> ().Count (c => c.Id == 5) == 0) {
+					db.Insert (new MeasurementUnitModel () {
+						Id = 5,
+						Abbreviation = "Bpm",
+						Symbol = "bpm",
+						Name = "Beat per minute",
+						MeasurementSystemId = 1
+					});
+				}
+
 				db.CreateTable<MeasurementSubjectModel> ();
 
+				db.CreateTable<ProfileModel> ();
+
+				db.CreateTable<MeasurementFrequencyModel> ();
+
+				if (db.Table<MeasurementFrequencyModel> ().Count (c => c.Id == 1) == 0) {
+					db.Insert (new MeasurementFrequencyModel () { Id = 1, Name = "Hourly" });
+				}
+
+				if (db.Table<MeasurementFrequencyModel> ().Count (c => c.Id == 2) == 0) {
+					db.Insert (new MeasurementFrequencyModel () { Id = 2, Name = "Twice Daily" });
+				}
+
+				if (db.Table<MeasurementFrequencyModel> ().Count (c => c.Id == 3) == 0) {
+					db.Insert (new MeasurementFrequencyModel () { Id = 3, Name = "Daily" });
+				}
+
+				if (db.Table<MeasurementFrequencyModel> ().Count (c => c.Id == 4) == 0) {
+					db.Insert (new MeasurementFrequencyModel () { Id = 4, Name = "Weekly" });
+				}
+
+				if (db.Table<MeasurementFrequencyModel> ().Count (c => c.Id == 5) == 0) {
+					db.Insert (new MeasurementFrequencyModel () { Id = 5, Name = "Monthly" });
+				}
+
+				db.CreateTable<ProfileMeasurementDefinitionModel> ();
+
 				db.CreateTable<MeasurementTypeModel> ();
+
 
 				if (db.Table<MeasurementTypeModel> ().Count (c => c.Id == 1) == 0) {
 					db.Insert (new MeasurementTypeModel () { Id = 1, Name = "Entry" });
@@ -172,6 +210,10 @@ namespace MeasureONE
 					db.Insert (new MeasurementDefinitionModel () { Id = 2, Name = "Weight" });
 				}
 
+				if (db.Table<MeasurementDefinitionModel> ().Count (c => c.Id == 3) == 0) {
+					db.Insert (new MeasurementDefinitionModel () { Id = 3, Name = "Heart Rate" });
+				}
+
 				db.CreateTable<MeasurementGroupDefinitionModel> ();
 				if (db.Table<MeasurementGroupDefinitionModel> ().Count (c => c.Id == 1) == 0) {
 					db.Insert (new MeasurementGroupDefinitionModel () {
@@ -200,6 +242,16 @@ namespace MeasureONE
 						MeasurementDefinitionId = 2,
 						MeasurementCategoryId = 2,
 						DefaultUnitId = 4
+					});
+				}
+
+				if (db.Table<MeasurementGroupDefinitionModel> ().Count (c => c.Id == 4) == 0) {
+					db.Insert (new MeasurementGroupDefinitionModel () {
+						Id = 4,
+						Name = "Heart Rate",
+						MeasurementDefinitionId = 3,
+						MeasurementCategoryId = 2,
+						DefaultUnitId = 5
 					});
 				}
 
@@ -245,6 +297,38 @@ namespace MeasureONE
 			} else {
 				js = db.Table<MeasurementSubjectModel> ().Where (w => w.Name == "JS").FirstOrDefault ();
 			}
+				
+			var jsProfile = new ProfileModel () { MeasurementSubjectId = js.Id};
+
+			var jp = db.Query<ProfileModel> ("SELECT P.* FROM ProfileModel as P JOIN MeasurementSubjectModel AS s ON p.MeasurementSubjectId == s.Id WHERE s.Name == ?", "JS");
+			if(jp.Count == 0) {
+				db.Insert (jsProfile);
+
+				var v = new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 3,
+					MeasurementDefinitionId = 1,
+					ProfileId = jsProfile.Id
+				};
+
+				var c = db.Insert (v);
+
+				db.Insert(new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 4 ,
+					MeasurementDefinitionId = 2 ,
+					ProfileId = jsProfile.Id
+				});
+				db.Insert (new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 3 ,
+					MeasurementDefinitionId = 3 ,
+					ProfileId = jsProfile.Id
+
+				});
+
+
+			} else {
+				jsProfile = jp.FirstOrDefault ();
+				db.GetChildren (jsProfile, true);
+			}
 
 			var stella = new MeasurementSubjectModel () { Name = "Stella" };
 			if (db.Table<MeasurementSubjectModel> ().Count (c => c.Name == "Stella") == 0) {
@@ -252,6 +336,38 @@ namespace MeasureONE
 			}else {
 				stella = db.Table<MeasurementSubjectModel> ().Where (w => w.Name == "Stella").FirstOrDefault ();
 			}
+
+			var stellaProfile = new ProfileModel () { MeasurementSubjectId = stella.Id };
+
+			var sp = db.Query<ProfileModel> ("SELECT P.* FROM ProfileModel as P JOIN MeasurementSubjectModel AS s ON p.MeasurementSubjectId == s.Id WHERE s.Name == ?", "Stella");
+			if(sp.Count == 0) {
+				db.Insert (stellaProfile);
+
+				var v = new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 3,
+					MeasurementDefinitionId = 1,
+					ProfileId = stellaProfile.Id
+				};
+
+				var c = db.Insert (v);
+
+				db.Insert(new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 4 ,
+					MeasurementDefinitionId = 2 ,
+					ProfileId = stellaProfile.Id
+				});
+				db.Insert (new ProfileMeasurementDefinitionModel () {
+					MeasurementFrequencyId = 3 ,
+					MeasurementDefinitionId = 3 ,
+					ProfileId = stellaProfile.Id
+
+				});
+
+			} else {
+				stellaProfile = sp.FirstOrDefault ();
+				db.GetChildren (stellaProfile, true);
+			}
+
 
 			var isabelle = new MeasurementSubjectModel () { Name = "Isabelle" };
 			if (db.Table<MeasurementSubjectModel> ().Count (c => c.Name == "Isabelle") == 0) {
@@ -315,8 +431,8 @@ namespace MeasureONE
 			var tabPage = new TabbedPage ();
 			tabPage.Children.Add (mainNav);
 
-			var secondPage = new AllMeasurements ();
-			tabPage.Children.Add (secondPage);
+			//var secondPage = new AllMeasurements ();
+			//tabPage.Children.Add (secondPage);
 
 
 			return tabPage;

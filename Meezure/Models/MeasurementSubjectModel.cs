@@ -3,7 +3,7 @@ using SQLite.Net.Attributes;
 using System.Collections.Generic;
 using SQLiteNetExtensions.Attributes;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementSubjectModel
 	{
@@ -24,6 +24,9 @@ namespace MeasureONE
 
 		[OneToMany (CascadeOperations = CascadeOperation.All)]
 		public List<MeasurementInstanceModel> MeasurementInstances {get;set;}
+
+		[OneToMany (CascadeOperations = CascadeOperation.All)]
+		public List<ProfileModel> Profiles {get;set;}
 	}
 }
 

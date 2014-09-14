@@ -5,7 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Autofac;
 using System.Collections;
 
-namespace MeasureONE
+namespace Meezure
 {	
 	public partial class MeasurementPage : ContentPage
 	{	

@@ -5,7 +5,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 
-namespace MeasureONE
+namespace Meezure
 {
 
 	public class MeasurementTypeList : ViewModelBase {

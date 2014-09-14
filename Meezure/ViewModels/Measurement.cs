@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementViewModel : ViewModelBase
 	{

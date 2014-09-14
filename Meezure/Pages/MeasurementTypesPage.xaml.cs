@@ -1,8 +1,8 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace MeasureONE
+namespace Meezure
 {	
 	public partial class MeasurementTypesPage : ContentPage
 	{	

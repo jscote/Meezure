@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementStatGrid : ContentView
 	{

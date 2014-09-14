@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using System.Threading.Tasks;
 
-namespace MeasureONE
+namespace Meezure
 {
 		public class HideableToolbarItem : ToolbarItem
 		{

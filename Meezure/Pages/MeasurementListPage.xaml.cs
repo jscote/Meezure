@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Autofac;
 
-namespace MeasureONE
+namespace Meezure
 {	
 	public partial class MeasurementListPage : ContentPage
 	{	

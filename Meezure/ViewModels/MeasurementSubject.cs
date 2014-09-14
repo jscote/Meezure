@@ -7,7 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 
-namespace MeasureONE
+namespace Meezure
 {
 
 	public class MeasurementSubjectListViewModel : ViewModelBase

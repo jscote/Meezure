@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using MeasureONE;
+using Meezure;
 
 
 [assembly: Xamarin.Forms.Dependency (typeof (SQLite_Android))]
@@ -8,7 +8,7 @@ using MeasureONE;
 public class SQLite_Android : ISQLite {
 	public SQLite_Android () {}
 	public SQLite.Net.SQLiteConnection GetConnection () {
-		var sqliteFilename = "MeasureOneSQLite.db3";
+		var sqliteFilename = "MeezureSQLite.db3";
 		string documentsPath = System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal); // Documents folder
 		var path = Path.Combine(documentsPath, sqliteFilename);
 		// Create the connection

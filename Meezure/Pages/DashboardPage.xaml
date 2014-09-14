@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="Meezure.MeasurementListPage"
-	xmlns:local="clr-namespace:Meezure;assembly=Meezure" Title="All Measures">
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Meezure.DashboardPage" 
+	xmlns:local="clr-namespace:Meezure;assembly=Meezure" Title="Dashboard">
 	<ContentPage.Content>
 		<StackLayout>
-		<Label Text="All Measurements"></Label>
+		<Picker x:Name="pickerSubject" SelectedIndex="{Binding SelectedSubjectIndex}"></Picker>
 		<ScrollView>
 			<ListView ItemsSource="{Binding Items}" HasUnevenRows="true">
 				<ListView.ItemTemplate>

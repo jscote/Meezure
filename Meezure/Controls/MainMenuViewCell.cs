@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MainMenuViewCell : ViewCell
 	{

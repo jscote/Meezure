@@ -7,9 +7,9 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms.Platform.Android;
 
-namespace MeasureONE.Android
+namespace Meezure.Android
 {
-	[Activity (Label = "MeasureONE", MainLauncher = true, WindowSoftInputMode=SoftInput.AdjustPan)]
+	[Activity (Label = "Meezure", MainLauncher = true, WindowSoftInputMode=SoftInput.AdjustPan)]
 	public class MainActivity : AndroidActivity
 	{
 		protected override void OnCreate (Bundle bundle)

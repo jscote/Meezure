@@ -6,13 +6,13 @@ using GalaSoft.MvvmLight.Ioc;
 using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace MeasureONE
+namespace Meezure
 {	
 	public partial class MainMenu : MasterDetailPage
 	{	
 		private ILifetimeScope _scope;
 
-		private string _loadingMsgId = string.Format ("Loading:{0}", MeasurementPage.PageName.Remove (MeasurementPage.PageName.IndexOf ("Page")));
+		//private string _loadingMsgId = string.Format ("Loading:{0}", MeasurementPage.PageName.Remove (MeasurementPage.PageName.IndexOf ("Page")));
 
 		private MainMenuView _master;
 		public MainMenu ()
@@ -23,12 +23,12 @@ namespace MeasureONE
 
 			_scope = App.AutoFacContainer.BeginLifetimeScope ();
 
-			var mainNav = new NavigationPage (_scope.Resolve<MeasurementPage>());
+			var mainNav = new NavigationPage (_scope.Resolve<DashboardPage>());
 
-			var msg = new NotificationMessage<IDictionary<string, int>>(new Dictionary<string, int>(), _loadingMsgId);
-			msg.Content.Add("Mode", 0);
+			//var msg = new NotificationMessage<IDictionary<string, int>>(new Dictionary<string, int>(), _loadingMsgId);
+			//msg.Content.Add("Mode", 0);
 
-			Messenger.Default.Send<NotificationMessage<IDictionary<string, int>>> (msg, _loadingMsgId);
+			//Messenger.Default.Send<NotificationMessage<IDictionary<string, int>>> (msg, _loadingMsgId);
 
 			Detail = mainNav;
 
@@ -84,7 +84,7 @@ namespace MeasureONE
 
 			layout.Children.Add (label);
 
-			_scope = App.AutoFacContainer.BeginLifetimeScope();
+			/*_scope = App.AutoFacContainer.BeginLifetimeScope();
 
 			var vm = _scope.Resolve<MeasurementDashboardViewModel> ();
 
@@ -131,8 +131,8 @@ namespace MeasureONE
 					PageSelection = twitter;
 					break;
 				}
-*/
-			};
+
+			};*/
 
 			Content = layout;
 		}

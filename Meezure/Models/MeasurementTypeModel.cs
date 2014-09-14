@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite.Net.Attributes;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementTypeModel
 	{

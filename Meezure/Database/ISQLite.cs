@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite.Net;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public interface ISQLite {
 		SQLiteConnection GetConnection();

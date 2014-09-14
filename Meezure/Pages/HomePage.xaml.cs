@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Autofac;
 
-namespace MeasureONE
+namespace Meezure
 {	
-	public partial class HomePage : ContentPage
+/*	public partial class HomePage : ContentPage
 	{	
 
 		private ILifetimeScope _scope;
@@ -36,6 +36,6 @@ namespace MeasureONE
 		{
 			App.NavigationService.OpenModal (MeasurementPage.PageName, (args.Item as MeasurementDashboardItemViewModel).MeasurementDefinitionId);
 		}
-	}
+	}*/
 }
 

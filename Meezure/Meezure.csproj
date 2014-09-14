@@ -38,9 +38,6 @@
     <Compile Include="Pages\PreferencesPage.xaml.cs">
       <DependentUpon>PreferencesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\MeasurementUnit.cs" />
     <Compile Include="Pages\UnitListPage.xaml.cs">
       <DependentUpon>UnitListPage.xaml</DependentUpon>
@@ -95,6 +92,12 @@
     </Compile>
     <Compile Include="ViewModels\FilterViewModel.cs" />
     <Compile Include="ViewModels\MeasurementListViewModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\MeasurementFrequencyModel.cs" />
+    <Compile Include="Models\ProfileMeasurementDefinitionModel.cs" />
+    <Compile Include="Pages\Dashboardpage.xaml.cs">
+      <DependentUpon>DashboardPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" />
@@ -157,9 +160,6 @@
     <EmbeddedResource Include="Pages\PreferencesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Pages\UnitListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -179,6 +179,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\MeasurementListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DashboardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace Meezure
 {
-	public class MeasurementDefinitionModel
+	public class MeasurementFrequencyModel
 	{
-
 		[PrimaryKey]
 		public int Id {
 			get;
@@ -20,15 +19,7 @@ namespace Meezure
 		}
 
 		[OneToMany(CascadeOperations = CascadeOperation.All)]
-		public List<MeasurementGroupDefinitionModel> MeasurementGroupDefinitions {
-			get;
-			set;
-		}
-
-		[OneToMany(CascadeOperations = CascadeOperation.All)]
 		public List<ProfileMeasurementDefinitionModel> ProfileMeasurementDefinitions {get;set;}
-
-
 	}
 }
 

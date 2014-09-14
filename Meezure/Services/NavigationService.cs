@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight;
 using Autofac;
 
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class NavigationService
 	{
@@ -90,9 +90,9 @@ namespace MeasureONE
 				Current = App.AutoFacContainer.Resolve<MeasurementPage> ();
 			}
 
-			if (whereTo == HomePage.PageName) {
+			/*if (whereTo == HomePage.PageName) {
 				Current = App.AutoFacContainer.Resolve<HomePage> ();
-			}
+			}*/
 
 		}
 	}

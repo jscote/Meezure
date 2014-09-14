@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 
-namespace MeasureONE
+namespace Meezure
 {	
 	public partial class AllMeasurements : MasterDetailPage
 	{	

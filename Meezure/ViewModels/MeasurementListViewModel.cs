@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementListViewModel: ViewModelBase
 	{

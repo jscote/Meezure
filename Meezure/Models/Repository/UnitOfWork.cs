@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using SQLite.Net;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class UnitOfWork : IUnitOfWork, IDisposable
 	{

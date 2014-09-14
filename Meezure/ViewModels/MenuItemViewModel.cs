@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MenuViewModel : ViewModelBase
 	{

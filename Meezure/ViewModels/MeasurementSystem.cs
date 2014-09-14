@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public enum MeasurementSystem
 	{

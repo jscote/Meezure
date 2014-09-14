@@ -3,7 +3,7 @@ using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 
-namespace MeasureONE
+namespace Meezure
 {
 	public class MeasurementGroupDefinitionModel
 	{
