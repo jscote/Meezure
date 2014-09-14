@@ -12,7 +12,7 @@ namespace Meezure
 	{	
 		private ILifetimeScope _scope;
 
-		private string _loadingMsgId = string.Format ("Loading:{0}", MeasurementListPage.PageName.Remove (MeasurementListPage.PageName.IndexOf ("Page")));
+		private string _loadingMsgId = string.Format ("Loading:{0}", MeasurementPage.PageName.Remove (MeasurementPage.PageName.IndexOf ("Page")));
 
 		private FilterPage _master;
 		public AllMeasurements ()
@@ -23,13 +23,13 @@ namespace Meezure
 
 			_scope = App.AutoFacContainer.BeginLifetimeScope ();
 
-			var mainNav = new NavigationPage (_scope.Resolve<MeasurementListPage>());
+			var mainNav = new NavigationPage (_scope.Resolve<MeasurementPage>());
 			mainNav.Title = "Measurements";
 
 			var msg = new NotificationMessage<IDictionary<string, int>>(new Dictionary<string, int>(), _loadingMsgId);
+			msg.Content.Add("Mode", 0);
 
 			Messenger.Default.Send<NotificationMessage<IDictionary<string, int>>> (msg, _loadingMsgId);
-
 			Detail = mainNav;
 
 			this.Icon = "slideout.png";
