@@ -90,9 +90,9 @@ namespace Meezure
 				Current = App.AutoFacContainer.Resolve<MeasurementPage> ();
 			}
 
-			/*if (whereTo == HomePage.PageName) {
-				Current = App.AutoFacContainer.Resolve<HomePage> ();
-			}*/
+			if (whereTo == StatsPage.PageName) {
+				Current = App.AutoFacContainer.Resolve<StatsPage> ();
+			}
 
 		}
 	}

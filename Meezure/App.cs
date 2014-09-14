@@ -29,6 +29,8 @@ namespace Meezure
 
 			builder.RegisterType<NavigationService> ();
 			builder.RegisterType<DashboardPage> ();
+			builder.RegisterType<StatsPage> ();
+			builder.RegisterType<StatsViewModel> ();
 
 			builder.RegisterType<UnitOfWork> ().As<IUnitOfWork> ();
 
@@ -52,6 +54,14 @@ namespace Meezure
 				.As < IPredefinedQuery<MeasurementInstanceModel>> ()
 				.Keyed< IPredefinedQuery<MeasurementInstanceModel>> ("Last Entry");
 
+			builder.RegisterType<MinMeasurement> ()
+				.As < IPredefinedQuery<MeasurementInstanceModel>> ()
+				.Keyed< IPredefinedQuery<MeasurementInstanceModel>> ("Minimum observed");
+
+			builder.RegisterType<MaxMeasurement> ()
+				.As < IPredefinedQuery<MeasurementInstanceModel>> ()
+				.Keyed< IPredefinedQuery<MeasurementInstanceModel>> ("Maximum observed");
+
 			AutoFacContainer = builder.Build ();
 
 		}
@@ -74,11 +84,11 @@ namespace Meezure
 			db.CreateTable<Version> ();
 			var isInstalled = false;
 
-			/*if (db.Table<Version> ().FirstOrDefault (w => w.InstalledVersion == "0.2.3") == null) {
+			if (db.Table<Version> ().FirstOrDefault (w => w.InstalledVersion == "0.2.3") == null) {
 				db.Insert (new Version () { InstalledVersion = "0.2.3" });
 			} else {
 				isInstalled = true;
-			}*/
+			}
 
 			if (!isInstalled) {
 				db.CreateTable<MeasurementSystemModel> ();

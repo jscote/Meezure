@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using GalaSoft.MvvmLight.Messaging;
 using Autofac;
-using System.Collections;
 
 namespace Meezure
 {	
-	public partial class MeasurementPage : ContentPage
+	public partial class StatsPage : ContentPage
 	{	
 
 
@@ -17,17 +15,17 @@ namespace Meezure
 		{
 			get 
 			{
-				return "MeasurementPage";
+				return "StatsPage";
 			}
 		}
 
-		public MeasurementPage ()
+		public StatsPage ()
 		{
 			InitializeComponent ();
 
 			_scope = App.AutoFacContainer.BeginLifetimeScope ();
 
-			var viewModel = _scope.Resolve<MeasurementViewModel> ();
+			var viewModel = _scope.Resolve<StatsViewModel> ();
 
 			BindingContext = viewModel;
 

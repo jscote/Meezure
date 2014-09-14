@@ -5,6 +5,8 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
 using Autofac;
 using System.Collections.Generic;
+using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace Meezure
 {
@@ -33,7 +35,7 @@ namespace Meezure
 		public void Load(int id) {
 
 
-			IList<MeasurementInstanceModel> measurements = new List<MeasurementInstanceModel> ();//_repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: null);
+			IList<MeasurementInstanceModel> measurements = new List<MeasurementInstanceModel> ();
 
 			var profile = _profileRepository.GetAllWithChildren (p => p.MeasurementSubjectId == id, o => o.Id, null, null, null).FirstOrDefault();
 
@@ -54,6 +56,7 @@ namespace Meezure
 			foreach (var entry in measurements) {
 				var item = new MeasurementDashboardItemViewModel () {
 					Subject = entry.Subject.Name,
+					MeasurementSubjectId = entry.MeasurementSubjectId,
 					LastRecordedDate = entry.DateRecorded,
 					MeasurementName = entry.Definition.Name,
 					MeasurementDefinitionId = entry.MeasurementDefinitionId
@@ -254,8 +257,28 @@ namespace Meezure
 	public class MeasurementDashboardItemViewModel: ViewModelBase
 	{
 
+		public ICommand GetDetails { protected set; get; }
+
 		public MeasurementDashboardItemViewModel ()
 		{
+			this.GetDetails = new Command<Tuple<int, int>> ((p) => GetMoreStats(p));
+
+		}
+
+		private void GetMoreStats (Tuple<int, int> parameter)
+		{
+			App.NavigationService.OpenModal (StatsPage.PageName, parameter);
+		}
+
+		private int _subjectId;
+		public int MeasurementSubjectId { 
+			get {
+				return _subjectId;
+			}
+			set {
+				Set (() => MeasurementSubjectId, ref _subjectId, value);
+
+			}
 		}
 
 		private string _subject;

@@ -102,6 +102,13 @@
     <Compile Include="Models\PreDefinedQuery\AvgMeasurement.cs" />
     <Compile Include="Models\PreDefinedQuery\BasePredefinedQuery.cs" />
     <Compile Include="Models\PreDefinedQuery\LastEntryMeasurement.cs" />
+    <Compile Include="Models\PreDefinedQuery\MinMeasurement.cs" />
+    <Compile Include="Models\PreDefinedQuery\MaxMeasurement.cs" />
+    <Compile Include="Pages\StatsPage.xaml.cs">
+      <DependentUpon>StatsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\StatsViewModel.cs" />
+    <Compile Include="Controls\StatViewCell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" />
@@ -187,6 +194,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\StatsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

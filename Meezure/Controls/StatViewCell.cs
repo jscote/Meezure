@@ -4,14 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace Meezure
 {
-	public class DashboardViewCell: ViewCell
+	public class StatViewCell: ViewCell
 	{
 
-		public DashboardViewCell ()
-		{
-		
-
-		}
 
 		protected override void OnBindingContextChanged ()
 		{
@@ -22,6 +17,7 @@ namespace Meezure
 
 			layout.Orientation = StackOrientation.Vertical;
 			layout.VerticalOptions = LayoutOptions.FillAndExpand;
+
 
 			var lblMeasurementType = new Label ();
 			lblMeasurementType.SetBinding (Label.TextProperty, "MeasurementName");
@@ -54,18 +50,6 @@ namespace Meezure
 
 			layout.Children.Add (lblMeasurementType);
 			layout.Children.Add (measurementLayout);
-
-			var buttonStack = new StackLayout ();
-			buttonStack.Orientation = StackOrientation.Horizontal;
-			buttonStack.HorizontalOptions = LayoutOptions.CenterAndExpand;
-			var bStats = new Button ();
-			bStats.Text = "More Stats";
-			bStats.SetBinding (Button.CommandProperty, "GetDetails");
-			bStats.CommandParameter = new Tuple<int, int> (vm.MeasurementSubjectId, vm.MeasurementDefinitionId);
-
-			buttonStack.Children.Add (bStats);
-
-			layout.Children.Add (buttonStack);
 
 		}
 	}
