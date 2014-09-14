@@ -4,7 +4,7 @@
 	xmlns:local="clr-namespace:Meezure;assembly=Meezure" Title="Dashboard">
 	<ContentPage.Content>
 		<StackLayout>
-		<Picker x:Name="pickerSubject" SelectedIndex="{Binding SelectedSubjectIndex}"></Picker>
+		<Picker x:Name="pickerSubject" SelectedIndex="{Binding SelectedSubjectIndex}" HorizontalOptions="FillAndExpand"></Picker>
 		<ScrollView>
 			<ListView ItemsSource="{Binding Items}" HasUnevenRows="true">
 				<ListView.ItemTemplate>

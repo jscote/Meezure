@@ -21,8 +21,11 @@ namespace Meezure
 
 			builder.RegisterType<MeasurementDashboardViewModel> ();
 			builder.RegisterType<Repository<MeasurementInstanceModel>>().As<IRepository<MeasurementInstanceModel>>();
+			builder.RegisterType<Repository<MeasurementGroupInstanceModel>>().As<IRepository<MeasurementGroupInstanceModel>>();
 			builder.RegisterType<Repository<MeasurementDefinitionModel>>().As<IRepository<MeasurementDefinitionModel>>();
 			builder.RegisterType<Repository<MeasurementSubjectModel>>().As<IRepository<MeasurementSubjectModel>>();
+			builder.RegisterType<Repository<ProfileModel>>().As<IRepository<ProfileModel>>();
+
 
 			builder.RegisterType<NavigationService> ();
 			builder.RegisterType<DashboardPage> ();
@@ -41,6 +44,13 @@ namespace Meezure
 			builder.RegisterType<FilterPage> ();
 			builder.RegisterType<FilterViewModel> ();
 
+			builder.RegisterType<AvgMeasurement> ()
+				.As < IPredefinedQuery<MeasurementInstanceModel>> ()
+				.Keyed< IPredefinedQuery<MeasurementInstanceModel>> ("Average");
+
+			builder.RegisterType<LastEntryMeasurement> ()
+				.As < IPredefinedQuery<MeasurementInstanceModel>> ()
+				.Keyed< IPredefinedQuery<MeasurementInstanceModel>> ("Last Entry");
 
 			AutoFacContainer = builder.Build ();
 
@@ -187,6 +197,10 @@ namespace Meezure
 					db.Insert (new MeasurementTypeModel () { Id = 6, Name = "Maximum Goal", Abbreviation = "Max Goal" });
 				}
 
+				if (db.Table<MeasurementTypeModel> ().Count (c => c.Id == 7) == 0) {
+					db.Insert (new MeasurementTypeModel () { Id = 7, Name = "Last Entry", Abbreviation = "Last" });
+				}
+
 				db.CreateTable<MeasurementCategoryModel> ();
 
 				if (db.Table<MeasurementCategoryModel> ().Count (c => c.Id == 1) == 0) {
@@ -314,7 +328,8 @@ namespace Meezure
 				var v = new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 3,
 					MeasurementDefinitionId = 1,
-					ProfileId = jsProfile.Id
+					ProfileId = jsProfile.Id,
+					MeasureTypeId = 2
 				};
 
 				var c = db.Insert (v);
@@ -322,12 +337,14 @@ namespace Meezure
 				db.Insert(new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 4 ,
 					MeasurementDefinitionId = 2 ,
-					ProfileId = jsProfile.Id
+					ProfileId = jsProfile.Id,
+					MeasureTypeId = 7
 				});
 				db.Insert (new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 3 ,
 					MeasurementDefinitionId = 3 ,
-					ProfileId = jsProfile.Id
+					ProfileId = jsProfile.Id,
+					MeasureTypeId = 2
 
 				});
 
@@ -353,7 +370,8 @@ namespace Meezure
 				var v = new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 3,
 					MeasurementDefinitionId = 1,
-					ProfileId = stellaProfile.Id
+					ProfileId = stellaProfile.Id,
+					MeasureTypeId = 2
 				};
 
 				var c = db.Insert (v);
@@ -361,12 +379,14 @@ namespace Meezure
 				db.Insert(new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 4 ,
 					MeasurementDefinitionId = 2 ,
-					ProfileId = stellaProfile.Id
+					ProfileId = stellaProfile.Id,
+					MeasureTypeId = 7
 				});
 				db.Insert (new ProfileMeasurementDefinitionModel () {
 					MeasurementFrequencyId = 3 ,
 					MeasurementDefinitionId = 3 ,
-					ProfileId = stellaProfile.Id
+					ProfileId = stellaProfile.Id,
+					MeasureTypeId = 2
 
 				});
 
@@ -414,6 +434,21 @@ namespace Meezure
 
 				db.Insert (jsBpm3);
 				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsBpm3.Id, MeasurementGroupDefinitionId = 4, UnitId = 5, Value = 69 });
+			}
+
+			var jsW = new MeasurementInstanceModel () {DateRecorded = DateTime.Now, MeasurementSubjectId = js.Id, MeasurementDefinitionId = 2 };
+			var jsW2 = new MeasurementInstanceModel () {DateRecorded = DateTime.Now.AddDays(-1), MeasurementSubjectId = js.Id, MeasurementDefinitionId = 2 };
+			var jsW3 = new MeasurementInstanceModel () {DateRecorded = DateTime.Now.AddDays(-2), MeasurementSubjectId = js.Id, MeasurementDefinitionId = 2 };
+
+			if (db.Table<MeasurementInstanceModel> ().Count (w => w.MeasurementSubjectId == js.Id && w.MeasurementDefinitionId == 2) == 0) {
+				db.Insert (jsW);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsW.Id, MeasurementGroupDefinitionId = 3, UnitId = 4, Value = 175 });
+
+				db.Insert (jsW2);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsW2.Id, MeasurementGroupDefinitionId = 3, UnitId = 4, Value = 177 });
+
+				db.Insert (jsW3);
+				db.Insert (new MeasurementGroupInstanceModel () { MeasurementInstanceId = jsW3.Id, MeasurementGroupDefinitionId = 3, UnitId = 4, Value = 174 });
 			}
 
 			var stellaBloodPressure = new MeasurementInstanceModel () {DateRecorded = DateTime.Now, MeasurementSubjectId = stella.Id, MeasurementDefinitionId = 1 };

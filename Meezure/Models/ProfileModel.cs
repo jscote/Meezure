@@ -29,6 +29,8 @@ namespace Meezure
 
 		[OneToMany(CascadeOperations = CascadeOperation.All)]
 		public List<ProfileMeasurementDefinitionModel> ProfileMeasurementDefinitions { get; set; }
+
+
 	}
 }
 

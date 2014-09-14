@@ -25,6 +25,7 @@ namespace Meezure
 
 			var lblMeasurementType = new Label ();
 			lblMeasurementType.SetBinding (Label.TextProperty, "MeasurementName");
+			lblMeasurementType.HorizontalOptions = LayoutOptions.CenterAndExpand;
 
 			var measurementLayout = new StackLayout ();
 
@@ -32,15 +33,21 @@ namespace Meezure
 				var innerStack = new StackLayout ();
 				innerStack.Orientation = StackOrientation.Vertical;
 				measurementLayout.Children.Add (innerStack);
-				innerStack.Children.Add (new Label () {Text = group.MeasurementType });
 
 				var measurementStack = new StackLayout ();
-				measurementStack.Orientation = StackOrientation.Horizontal;
+				measurementStack.Orientation = StackOrientation.Vertical;
+				measurementStack.HorizontalOptions = LayoutOptions.CenterAndExpand;
 				innerStack.Children.Add (measurementStack);
 				foreach (var item in group.MeasurementItems) {
-					measurementStack.Children.Add (new Label () { Text = item.Name });
-					measurementStack.Children.Add (new Label () { Text = item.Value.ToString () });
-					measurementStack.Children.Add (new Label () { Text = item.Uom });
+
+					var innerMeasurementStack = new StackLayout ();
+					if (group.MeasurementItems.Count > 1) {
+						innerMeasurementStack.Children.Add (new Label () { Text = item.Name });
+					}
+					innerMeasurementStack.Orientation = StackOrientation.Horizontal;
+					innerMeasurementStack.Children.Add (new Label () { Text = item.Value.ToString () });
+					innerMeasurementStack.Children.Add (new Label () { Text = item.Uom });
+					measurementStack.Children.Add (innerMeasurementStack);
 				}
 
 			}

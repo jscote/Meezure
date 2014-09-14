@@ -12,6 +12,7 @@ public class SQLite_Android : ISQLite {
 		string documentsPath = System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal); // Documents folder
 		var path = Path.Combine(documentsPath, sqliteFilename);
 
+		//File.Delete (path);
 		// Create the connection
 		var plat = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
 		var conn = new SQLite.Net.SQLiteConnection(plat, path);

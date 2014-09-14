@@ -13,7 +13,7 @@ namespace Meezure
 		IList<TEntity> GetAll <TValue> (Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TValue>> orderBy, bool? descending, int? skip, int? count);
 		IList<TEntity> GetAllWithChildren <TValue> (Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TValue>> orderBy, bool? descending, int? skip, int? count);
 		IList<TEntity> GetAllWithChildren (string query, object[] parameters);
-
+   	
 		bool Add(TEntity entity);
 		bool Delete(int primaryKey);
 		bool Update(TEntity entity);

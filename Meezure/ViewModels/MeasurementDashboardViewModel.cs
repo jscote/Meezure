@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Messaging;
 using System.Linq;
+using Autofac;
+using System.Collections.Generic;
 
 namespace Meezure
 {
@@ -12,13 +14,14 @@ namespace Meezure
 		private string _loadingMsgId = string.Format ("Loading:Dashboard");
 
 		private IRepository<MeasurementInstanceModel> _repository;
+		private IRepository<MeasurementSubjectModel> _subjectRepository;
+		private IRepository<ProfileModel> _profileRepository;
 
-		IRepository<MeasurementSubjectModel> _subjectRepository;
-
-		public MeasurementDashboardViewModel(IRepository<MeasurementInstanceModel> repository, IRepository<MeasurementSubjectModel> subjectRepository) 
+		public MeasurementDashboardViewModel(IRepository<ProfileModel> profileRepository, IRepository<MeasurementInstanceModel> repository, IRepository<MeasurementSubjectModel> subjectRepository) 
 		{
 			_subjectRepository = subjectRepository;
 			_repository = repository;
+			_profileRepository = profileRepository;
 
 			Subjects = new ObservableCollection<MeasurementSubjectModel> (_subjectRepository.GetAll ());
 
@@ -30,7 +33,21 @@ namespace Meezure
 		public void Load(int id) {
 
 
-			var measurements = _repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: null);
+			IList<MeasurementInstanceModel> measurements = new List<MeasurementInstanceModel> ();//_repository.GetAllWithChildren(predicate: p => p.MeasurementSubjectId == id, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: null);
+
+			var profile = _profileRepository.GetAllWithChildren (p => p.MeasurementSubjectId == id, o => o.Id, null, null, null).FirstOrDefault();
+
+			if (profile != null) {
+				using(var scope = App.AutoFacContainer.BeginLifetimeScope ()) {	
+					foreach (var def in profile.ProfileMeasurementDefinitions) {
+						var query = scope.ResolveKeyed<IPredefinedQuery<MeasurementInstanceModel>> (def.MeasurementTypeModel.Name);
+						var result = query.Query ((new List<object>() {id, def.MeasurementDefinitionId}).ToArray());
+						if (result != null) {
+							measurements.Add (result);
+						}
+					}
+				}
+			}
 
 			Items.Clear ();
 

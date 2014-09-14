@@ -49,6 +49,12 @@ namespace Meezure
 			set;
 		}
 
+		[ForeignKey(typeof(MeasurementTypeModel))]
+		public int MeasureTypeId { get; set; }
+
+		[ManyToOne(CascadeOperations = CascadeOperation.CascadeRead)]
+		public MeasurementTypeModel MeasurementTypeModel { get; set; }
+
 	}
 }
 
