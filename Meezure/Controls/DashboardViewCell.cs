@@ -63,7 +63,13 @@ namespace Meezure
 			bStats.SetBinding (Button.CommandProperty, "GetDetails");
 			bStats.CommandParameter = new Tuple<int, int> (vm.MeasurementSubjectId, vm.MeasurementDefinitionId);
 
+			var bAdd = new Button ();
+			bAdd.Text = string.Format("Add {0}", vm.MeasurementName);
+			bAdd.SetBinding (Button.CommandProperty, "AddMeasurement");
+			bAdd.CommandParameter = new Tuple<int, int> (vm.MeasurementSubjectId, vm.MeasurementDefinitionId);
+
 			buttonStack.Children.Add (bStats);
+			buttonStack.Children.Add (bAdd);
 
 			layout.Children.Add (buttonStack);
 

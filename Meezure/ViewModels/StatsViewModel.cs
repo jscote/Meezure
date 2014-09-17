@@ -13,9 +13,9 @@ namespace Meezure
 	public class StatsViewModel : ViewModelBase
 	{
 
-		private string _loadingMsgId = string.Format ("OpenModal:{0}", StatsPage.PageName.Remove (StatsPage.PageName.IndexOf ("Page")));
+		private string _loadingMsgId = string.Format ("Loading:{0}", StatsPage.PageName.Remove (StatsPage.PageName.IndexOf ("Page")));
 
-		protected ICommand ClosePopup { get; set; }
+		public ICommand ClosePopup { get; set; }
 
 		public StatsViewModel (){
 			MessengerInstance.Register<NotificationMessage<Tuple<int, int>>> (this, _loadingMsgId, (msg) => Load (msg.Content));
@@ -23,7 +23,7 @@ namespace Meezure
 		}
 
 		private void Close() {
-			App.NavigationService.CloseModal ();
+			App.NavigationService.NavigateBack ();
 		}
 
 		private void Load(Tuple<int, int> parameter) {

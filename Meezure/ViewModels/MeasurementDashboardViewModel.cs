@@ -53,6 +53,7 @@ namespace Meezure
 
 			Items.Clear ();
 
+
 			foreach (var entry in measurements) {
 				var item = new MeasurementDashboardItemViewModel () {
 					Subject = entry.Subject.Name,
@@ -62,7 +63,7 @@ namespace Meezure
 					MeasurementDefinitionId = entry.MeasurementDefinitionId
 				};
 
-				if(entry.MeasurementGroups != null && entry.MeasurementGroups.Any()) {
+				if (entry.MeasurementGroups != null && entry.MeasurementGroups.Any ()) {
 
 					item.MeasurementGroups = new ObservableCollection<MeasurementItemGroupViewModel> ();
 					var g = new MeasurementItemGroupViewModel ();
@@ -83,7 +84,7 @@ namespace Meezure
 
 				Items.Add (item);
 			}
-
+			
 		}
 
 		private int _selectedSubjectIndex;
@@ -259,15 +260,23 @@ namespace Meezure
 
 		public ICommand GetDetails { protected set; get; }
 
+		public ICommand AddMeasurement { protected set; get; }
+
 		public MeasurementDashboardItemViewModel ()
 		{
 			this.GetDetails = new Command<Tuple<int, int>> ((p) => GetMoreStats(p));
+			this.AddMeasurement = new Command<Tuple<int, int>> ((p) => AddNewMeasurement(p));
 
 		}
 
 		private void GetMoreStats (Tuple<int, int> parameter)
 		{
-			App.NavigationService.OpenModal (StatsPage.PageName, parameter);
+			App.NavigationService.NavigateTo (StatsPage.PageName, parameter);
+		}
+
+		private void AddNewMeasurement (Tuple<int, int> parameter)
+		{
+			App.NavigationService.NavigateTo (StatsPage.PageName, parameter);
 		}
 
 		private int _subjectId;
