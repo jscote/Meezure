@@ -265,7 +265,7 @@ namespace Meezure
 		public MeasurementDashboardItemViewModel ()
 		{
 			this.GetDetails = new Command<Tuple<int, int>> ((p) => GetMoreStats(p));
-			this.AddMeasurement = new Command<Tuple<int, int>> ((p) => AddNewMeasurement(p));
+			this.AddMeasurement = new Command<IDictionary<string, int>> ((p) => AddNewMeasurement(p));
 
 		}
 
@@ -274,9 +274,9 @@ namespace Meezure
 			App.NavigationService.NavigateTo (StatsPage.PageName, parameter);
 		}
 
-		private void AddNewMeasurement (Tuple<int, int> parameter)
+		private void AddNewMeasurement (IDictionary<string, int> parameter)
 		{
-			App.NavigationService.NavigateTo (StatsPage.PageName, parameter);
+			App.NavigationService.NavigateTo (MeasurementPage.PageName, parameter);
 		}
 
 		private int _subjectId;

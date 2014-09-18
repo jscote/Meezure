@@ -76,7 +76,7 @@ namespace Meezure
 		{
 			if (IsValid (entity)) {
 
-				Session.StartTransaction ();
+				//Session.StartTransaction ();
 			
 				Session.Connection.InsertWithChildren (entity, true);
 

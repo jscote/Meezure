@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Meezure
 {
@@ -66,7 +67,11 @@ namespace Meezure
 			var bAdd = new Button ();
 			bAdd.Text = string.Format("Add {0}", vm.MeasurementName);
 			bAdd.SetBinding (Button.CommandProperty, "AddMeasurement");
-			bAdd.CommandParameter = new Tuple<int, int> (vm.MeasurementSubjectId, vm.MeasurementDefinitionId);
+			IDictionary<string, int> parameters = new Dictionary<string, int> ();
+			parameters.Add ("SubjectId", vm.MeasurementSubjectId);
+			parameters.Add ("DefinitionId", vm.MeasurementDefinitionId);
+			parameters.Add ("Mode", 0);
+			bAdd.CommandParameter = parameters;
 
 			buttonStack.Children.Add (bStats);
 			buttonStack.Children.Add (bAdd);
