@@ -38,6 +38,7 @@ namespace Meezure
 			parameters.TryGetValue ("DefinitionId", out definitionId);
 			parameters.TryGetValue ("Mode", out _currentMode);
 
+			MeasurementSubjectId = subjectId;
 
 			if (definitionId == 0) {
 				var measurement = _instanceRepository.GetAll (predicate: null, orderBy: (o) => o.DateRecorded, descending: true, skip: 0, count: 1).FirstOrDefault ();
@@ -94,6 +95,18 @@ namespace Meezure
 			}
 		}
 
+
+		private int _measurementSubjectId;
+		public int MeasurementSubjectId {
+			get {
+				return _measurementSubjectId;
+			}
+			set {
+				Set (() => MeasurementSubjectId, ref _measurementSubjectId, value);
+
+			}
+		}
+
 		private DateTime _dateTimeCaptured;
 		public DateTime DateTimeCaptured {
 			get {
@@ -110,12 +123,15 @@ namespace Meezure
 			DateTimeCaptured = DateTime.Now;
 			UnregisterMessages ();
 
-			//We are adding a new measurement
+			//We are adding a new measurement - this may not be how we will do it in the end...We may just load the instanceId, and if it is 0 then we insert, otherwise update.
 			if (_currentMode == 0) {
 				InsertMeasurement ();
 			} else if (_currentMode == 1) {
 				//We will be updating an existing measurement
 			}
+
+			Messenger.Default.Send<NotificationMessage<int>> (new NotificationMessage<int>(MeasurementSubjectId, "Loading:Dashboard"), "Loading:Dashboard");
+			App.NavigationService.NavigateBack ();
 		}
 
 		private void InsertMeasurement() {

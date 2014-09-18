@@ -27,7 +27,7 @@ namespace Meezure
 
 			Subjects = new ObservableCollection<MeasurementSubjectModel> (_subjectRepository.GetAll ());
 
-			//MessengerInstance.Register<NotificationMessage> (this, _loadingMsgId, (msg) => Load ());
+			MessengerInstance.Register<NotificationMessage<int>> (this, _loadingMsgId, (msg) => Load (msg.Content));
 
 		}
 
