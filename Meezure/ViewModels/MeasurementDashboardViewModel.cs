@@ -18,12 +18,18 @@ namespace Meezure
 		private IRepository<MeasurementInstanceModel> _repository;
 		private IRepository<MeasurementSubjectModel> _subjectRepository;
 		private IRepository<ProfileModel> _profileRepository;
+		private IRepository<MeasurementDefinitionModel> _definitionRepository;
 
-		public MeasurementDashboardViewModel(IRepository<ProfileModel> profileRepository, IRepository<MeasurementInstanceModel> repository, IRepository<MeasurementSubjectModel> subjectRepository) 
+		public MeasurementDashboardViewModel(IRepository<ProfileModel> profileRepository, 
+			IRepository<MeasurementInstanceModel> repository, 
+			IRepository<MeasurementSubjectModel> subjectRepository,
+			IRepository<MeasurementDefinitionModel> definitionRepository
+		) 
 		{
 			_subjectRepository = subjectRepository;
 			_repository = repository;
 			_profileRepository = profileRepository;
+			_definitionRepository = definitionRepository;
 
 			Subjects = new ObservableCollection<MeasurementSubjectModel> (_subjectRepository.GetAll ());
 
@@ -46,6 +52,10 @@ namespace Meezure
 						var result = query.Query ((new List<object>() {id, def.MeasurementDefinitionId}).ToArray());
 						if (result != null) {
 							measurements.Add (result);
+						} else {
+							measurements.Add (new MeasurementInstanceModel () {MeasurementDefinitionId = def.MeasurementDefinitionId, 
+								MeasurementSubjectId = id, Subject = Subjects.FirstOrDefault(f => f.Id == id), 
+								Definition = _definitionRepository.GetAll(p => p.Id == def.MeasurementDefinitionId).FirstOrDefault()});
 						}
 					}
 				}
