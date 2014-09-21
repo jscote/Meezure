@@ -9,7 +9,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace Meezure.Android
 {
-	[Activity (Label = "Meezure", MainLauncher = true, WindowSoftInputMode=SoftInput.AdjustPan)]
+	[Activity (Label = "Meezure", MainLauncher = true, WindowSoftInputMode=SoftInput.AdjustPan, Theme = "@android:style/Theme.Holo.Light")]
 	public class MainActivity : AndroidActivity
 	{
 		protected override void OnCreate (Bundle bundle)

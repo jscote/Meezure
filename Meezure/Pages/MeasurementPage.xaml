@@ -24,9 +24,6 @@
 			<Label Text="Date Entered" YAlign="Center" XAlign="End"></Label>
 			<DatePicker Date="{Binding DateTimeCaptured}"></DatePicker>
 			</StackLayout>
-			<StackLayout>
-				<local:MeasurementStatGrid></local:MeasurementStatGrid>
-			</StackLayout>
 
 			<Button Text="Save" Command="{Binding SaveMeasurement}">
 			</Button>
