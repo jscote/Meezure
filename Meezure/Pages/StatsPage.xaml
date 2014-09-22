@@ -6,7 +6,7 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Label Text="{Binding MeasurementName}"></Label>
-			<ScrollView>
+			<!---<ScrollView>-->
 				<ListView ItemsSource="{Binding Items}" HasUnevenRows="true">
 					<ListView.ItemTemplate>
 						<DataTemplate>
@@ -14,7 +14,7 @@
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>
-			</ScrollView>
+			<!---</ScrollView>-->
 			<Button Text="Go Back" Command="{Binding ClosePopup}"></Button>
 		</StackLayout>
 	</ContentPage.Content>

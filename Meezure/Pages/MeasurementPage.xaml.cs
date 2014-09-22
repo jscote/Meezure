@@ -29,10 +29,32 @@ namespace Meezure
 
 			var viewModel = _scope.Resolve<MeasurementViewModel> ();
 
+
+		
+
 			BindingContext = viewModel;
 
 
+		}
 
+		protected override void OnAppearing ()
+		{
+			//base.OnBindingContextChanged ();
+
+			var lView = Content.FindByName<ListView> ("list");
+
+
+			var vm = (BindingContext as MeasurementViewModel);
+
+			if (vm != null) {
+				if (vm.MeasurementGroup != null && vm.MeasurementGroup.MeasurementItems != null ) {
+
+					lView.HeightRequest = vm.MeasurementGroup.MeasurementItems.Count * 60;
+				}
+			}
+
+
+			base.OnAppearing ();
 		}
 
 	}

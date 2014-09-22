@@ -8,12 +8,13 @@ namespace Meezure
 
 		public MeasurementEntryCell ()
 		{
+
 			var grid = new Grid ();
 			grid.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (75, GridUnitType.Absolute) });
 			grid.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (75, GridUnitType.Star) });
 			grid.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (50, GridUnitType.Star) });
 
-			grid.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (1, GridUnitType.Auto) });
+			grid.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (40, GridUnitType.Auto) });
 
 			grid.RowSpacing = 0;
 
@@ -43,6 +44,12 @@ namespace Meezure
 			grid.Children.Add (labelUom, 2, 0);
 
 			View = grid;
+
+			base.OnBindingContextChanged ();
+
+			if (Device.OS == TargetPlatform.iOS) {
+				Height = grid.RowDefinitions.Count * 50;
+			}
 
 		}
 			

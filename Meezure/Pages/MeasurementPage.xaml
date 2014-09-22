@@ -9,16 +9,18 @@
 
 			<Label Text="{Binding MeasurementGroup.SubjectName}"></Label>
 			<Label Text="{Binding MeasurementGroup.DefinitionName}"></Label>
+		
 
-			<StackLayout>
-			<ListView ItemsSource="{Binding MeasurementGroup.MeasurementItems}" HasUnevenRows="true">
+
+			<ListView ItemsSource="{Binding MeasurementGroup.MeasurementItems}" HasUnevenRows="false" x:Name="list" VerticalOptions="Start">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<local:MeasurementEntryCell></local:MeasurementEntryCell>
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			</StackLayout>
+		
+		
 
 			<StackLayout Orientation = "Horizontal">
 			<Label Text="Date Entered" YAlign="Center" XAlign="End"></Label>

@@ -10,8 +10,9 @@ namespace Meezure
 
 		protected override void OnBindingContextChanged ()
 		{
+			View = null;
 			var layout = new StackLayout ();
-			View = layout;
+
 
 			var vm = BindingContext as MeasurementDashboardItemViewModel;
 
@@ -25,6 +26,8 @@ namespace Meezure
 
 			var measurementLayout = new StackLayout ();
 
+			var itemCount = 0;
+
 			foreach(var group in vm.MeasurementGroups) {
 				var innerStack = new StackLayout ();
 				innerStack.Orientation = StackOrientation.Vertical;
@@ -34,7 +37,12 @@ namespace Meezure
 				measurementStack.Orientation = StackOrientation.Vertical;
 				measurementStack.HorizontalOptions = LayoutOptions.CenterAndExpand;
 				innerStack.Children.Add (measurementStack);
+
+				itemCount = itemCount + group.MeasurementItems.Count;
+
 				foreach (var item in group.MeasurementItems) {
+
+
 
 					var innerMeasurementStack = new StackLayout ();
 					if (group.MeasurementItems.Count > 1) {
@@ -43,6 +51,7 @@ namespace Meezure
 					innerMeasurementStack.Orientation = StackOrientation.Horizontal;
 					innerMeasurementStack.Children.Add (new Label () { Text = item.Value.ToString () });
 					innerMeasurementStack.Children.Add (new Label () { Text = item.Uom });
+					innerMeasurementStack.HeightRequest = 40;
 					measurementStack.Children.Add (innerMeasurementStack);
 				}
 
@@ -50,6 +59,14 @@ namespace Meezure
 
 			layout.Children.Add (lblMeasurementType);
 			layout.Children.Add (measurementLayout);
+
+			View = layout;
+
+			base.OnBindingContextChanged ();
+
+			if (Device.OS == TargetPlatform.iOS) {
+				Height = 20 + (itemCount * 40);
+			}
 
 		}
 	}

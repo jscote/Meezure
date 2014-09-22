@@ -6,7 +6,7 @@
 		<StackLayout>
 		<Picker x:Name="pickerSubject" SelectedIndex="{Binding SelectedSubjectIndex}" HorizontalOptions="FillAndExpand"></Picker>
 
-		<ScrollView>
+		<!---<ScrollView x:Name="scrollView">-->
 			<ListView ItemsSource="{Binding Items}" HasUnevenRows="true">
 				<ListView.ItemTemplate>
 					<DataTemplate>
@@ -14,9 +14,9 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-		</ScrollView>
+		<!---</ScrollView>-->
 
-		<Button Text="Enter Measurements for today"></Button>
+		<Button Text="Enter Measurements for today!"></Button>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
